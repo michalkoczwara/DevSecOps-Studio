@@ -1,0 +1,30 @@
+---
+# Limits how many jobs globally can be run concurrently.
+# The most upper limit of jobs using all defined runners
+gitlab_runner_repository_installation_script_url: "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh"
+
+gitlab_runner_concurrent: '{{ ansible_processor_cores }}'
+
+# Defines in seconds how often to check GitLab for a new builds
+gitlab_runner_check_interval: 0
+
+# GitLab coordinator URL
+gitlab_runner_coordinator_url: 'https://gitlab.local/'
+
+# Path to coordinator cert on local machine
+# Define this if you are using Self-Signed cert for gitlab
+# https://gitlab.com/gitlab-org/gitlab-runner/blob/master/docs/configuration/tls-self-signed.md
+gitlab_runner_coordinator_cert_path: './files/gitlab.local.crt'
+
+# GitLab registration token
+gitlab_runner_registration_token: 'D2KpngXPzmxBgovo4DUJ'
+
+# Runner name (not used, just informatory)
+gitlab_runner_name: '{{ ansible_hostname }}'
+
+# Runner tags
+gitlab_runner_tags: []
+
+# Directory where builds and caches will be stored in context of selected executor
+# (Locally, Docker, SSH)
+gitlab_runner_persistent_dir: "/etc/gitlab-runner"

@@ -1,0 +1,12 @@
+---
+
+- name: Install gitlab runner
+  hosts: all
+  become: true
+  become_user: root
+  remote_user: vagrant
+  roles:
+    - gitlab-runner
+  tags:
+    - runner
+

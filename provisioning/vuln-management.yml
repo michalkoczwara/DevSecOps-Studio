@@ -1,0 +1,10 @@
+---
+
+- name: Install Vulnerability Management 
+  hosts: all
+  become: yes
+  become_user: root
+  remote_user: vagrant
+
+  roles:
+    - dojo 

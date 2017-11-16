@@ -1,0 +1,9 @@
+---
+- name: Create required directories
+  file:
+    path: "{{ gitlab_runner_persistent_dir }}"
+    state: directory
+    owner: gitlab-runner
+    group: gitlab-runner
+    mode: 0775
+    recurse: true

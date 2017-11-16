@@ -1,0 +1,15 @@
+---
+
+- name: Install ELK stack
+  hosts: all
+  become: yes
+  become_user: root
+  remote_user: vagrant
+  vars:
+    - elasticsearch_network_host: localhost
+
+  roles:
+    - geerlingguy.nginx
+    - geerlingguy.elasticsearch
+    - geerlingguy.kibana
+    - geerlingguy.logstash

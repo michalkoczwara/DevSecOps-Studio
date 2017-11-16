@@ -1,0 +1,14 @@
+---
+
+- name: Install inspec dependencies
+  apt:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - gcc
+    - make
+
+- name: Install Inspec
+  shell: bash -lc "gem install inspec"
+  become: yes
+  become_user: "{{ server_user }}"

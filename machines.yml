@@ -1,0 +1,36 @@
+---
+- name: DevSecOps-Box 
+  box: bento/ubuntu-16.04
+  ram: 1024 
+  ip: 10.0.1.10
+  ansible: "provisioning/devsecops-box.yml" 
+
+- name: jenkins 
+  box: bento/ubuntu-16.04
+  ram: 512 
+  ip: 10.0.1.11
+  ansible: "jenkins.yml"
+
+- name: gitlab 
+  box: bento/ubuntu-16.04
+  ram: 1024 
+  ip: 10.0.1.15
+  ansible: "gitlab.yml"
+
+- name: gitlab-runner
+  box: bento/ubuntu-16.04
+  ram: 512 
+  ip: 10.0.1.16
+  ansible: "gitlab-runner.yml"
+
+- name: elk
+  box: bento/ubuntu-16.04
+  ram: 1024 
+  ip: 10.0.1.18
+  ansible: "provisioning/elk.yml"
+
+  #- name: vuln-management
+  #  box: bento/ubuntu-16.04
+  #  ram: 512 
+  #  ip: 10.0.1.20
+  #  ansible: "dojo.yml"

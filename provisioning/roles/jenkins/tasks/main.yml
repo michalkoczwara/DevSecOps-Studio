@@ -1,0 +1,17 @@
+---
+- name: Set Jenkins key
+  shell: wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
+
+- name: Set Jenkins binary
+  shell: sh -c 'echo deb http://pkg.jenkins-ci.org/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+
+- name: Update apt
+  apt:
+    update_cache=yes
+
+- name: Install Jenkins
+  apt:
+    name=jenkins
+    state=present
+  notify:
+    - Restart Jenkins

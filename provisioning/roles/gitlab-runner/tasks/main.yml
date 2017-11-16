@@ -1,0 +1,54 @@
+---
+
+- name: Download GitLab Runner repository installation script.
+  get_url:
+    url: "{{ gitlab_runner_repository_installation_script_url }}"
+    dest: /tmp/gitlab_runner_install_repository.sh
+    validate_certs: yes
+
+- name: Install GitLab Runner repository
+  command: bash /tmp/gitlab_runner_install_repository.sh
+
+- name: Install GitLab Runner dependencies
+  apt:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - debian-archive-keyring
+    - apt-transport-https
+    - ca-certificates
+
+- name: Install GitLab Runner
+  apt:
+    name: gitlab-runner
+    state: present
+
+- name: Setup gitlab-runner directories
+  include: setup-dirs.yml
+
+- name: Copy config.toml
+  template:
+    src: config.toml.j2
+    dest: "/etc/gitlab-runner/config.toml"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Install Self-Signed cert on system
+  include: custom-certs.yml
+  when: gitlab_runner_coordinator_cert_path != ''
+
+- name: Wait untils Gitlab web API is available
+  shell: curl --head --insecure --silent '{{ gitlab_runner_coordinator_url }}'
+  register: result
+  until: result.stdout.find("302 Found") != -1
+  retries: 12
+  delay: 5
+
+  # https://gitlab.com/gitlab-org/gitlab-runner/issues/1490
+- name: Add gitlab.local ip address into /etc/hosts
+  shell: echo "10.0.1.15 gitlab.local" >> /etc/hosts
+
+- name: Register GitLab Runner
+  include: register-runner.yml
+  when: gitlab_runner_registration_token != ''

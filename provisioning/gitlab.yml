@@ -1,0 +1,10 @@
+---
+
+- name: Install gitlab server
+  hosts: all
+  become: yes
+  become_user: root
+  remote_user: vagrant
+
+  roles:
+    - gitlab

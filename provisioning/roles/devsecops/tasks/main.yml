@@ -1,0 +1,26 @@
+---
+
+- name: Install awscli
+  pip:
+    name: awscli
+
+- name: Install awsebcli
+  pip:
+    name: awsebcli
+
+- name: Install Ansible
+  pip:
+    name: ansible
+
+- name: Add vagrant user to Docker group
+  user:
+    name: vagrant
+    groups: docker
+    append: yes
+
+- name: Generate SSH key of vagrant user
+  user:
+    name: vagrant
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa

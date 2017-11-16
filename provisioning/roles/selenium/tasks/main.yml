@@ -1,0 +1,14 @@
+---
+- name: Install dependencies
+  package: name=unzip
+
+- name: Download Selenium
+  get_url:
+    url: "http://selenium-release.storage.googleapis.com/{{ selenium_version | regex_replace('\\.[0-9]+$', '') }}/selenium-server-standalone-{{ selenium_version }}.jar"
+    dest: "selenium-server-standalone-{{ selenium_version }}.jar"
+
+- name: Install firefox
+  apt:
+    name=firefox
+    state=present
+    update_cache=yes

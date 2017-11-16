@@ -1,0 +1,17 @@
+---
+- name: Ensure local certs directory exists
+  file:
+    path: "/usr/local/share/ca-certificates"
+    recurse: true
+    state: directory
+
+- name: Copy custom certs
+  copy:
+    src: "{{ gitlab_runner_coordinator_cert_path }}"
+    dest: "/usr/local/share/ca-certificates/"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Update cert index
+  shell: /usr/sbin/update-ca-certificates

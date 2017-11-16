@@ -1,0 +1,17 @@
+---
+- name: List configured runners
+  command: gitlab-runner list
+  register: configured_runners
+  changed_when: false
+
+- name: Upload gitlab runner regiter script to /tmp
+  copy:
+    src: gitlab-register.sh
+    dest: /tmp/gitlab-register.sh
+    owner: root
+    group: root
+    mode: 0754
+  when: configured_runners.stdout.find("{{ gitlab_runner_name }}") == -1
+
+- name: Register gitlab runner
+  command: bash /tmp/gitlab-register.sh
